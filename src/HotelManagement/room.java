@@ -4,8 +4,14 @@
  */
 package HotelManagement;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -20,12 +26,31 @@ public class room extends javax.swing.JFrame {
      */
     public room() {
         initComponents();
+        Connect();
     }
 
     
    
     Connection con;
     PreparedStatement pst;
+    
+    public void Connect()
+    {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/hotelmanagement","root","");
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    
+    
+    
+    }
     
     
     
