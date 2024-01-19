@@ -70,7 +70,7 @@ public class room extends javax.swing.JFrame {
             else{
             long id =Long.parseLong(rs.getString("MAX(rid)").substring(2,rs.getString("MAX(rid)").length() ));
             id++;
-             jLabel6.setText("R"+String.format("%03d", id));
+             jLabel6.setText("R0"+String.format("%03d", id));
             }
            
             
@@ -255,6 +255,14 @@ public class room extends javax.swing.JFrame {
             pst.setString(4, amount);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this,"Room Addeddddd");
+            
+            txtrtype.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            txtamount.setText("");
+            autoID();
+            
+            
+            
             
             
         } catch (SQLException ex) {
