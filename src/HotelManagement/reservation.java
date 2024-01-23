@@ -252,7 +252,6 @@ public class reservation extends javax.swing.JFrame {
         txtbtype = new javax.swing.JComboBox<>();
         txtamount = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -304,11 +303,19 @@ public class reservation extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Edit");
-
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Clear");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -327,6 +334,11 @@ public class reservation extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -375,8 +387,7 @@ public class reservation extends javax.swing.JFrame {
                                     .addComponent(txtname, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -394,13 +405,11 @@ public class reservation extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addComponent(jButton1)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton2)
-                        .addGap(33, 33, 33)
+                        .addGap(32, 32, 32)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(31, 31, 31)
                         .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(89, 89, 89)
                         .addComponent(jButton5)))
                 .addContainerGap(52, Short.MAX_VALUE))
         );
@@ -457,7 +466,6 @@ public class reservation extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
                     .addComponent(jButton5))
@@ -536,7 +544,7 @@ public class reservation extends javax.swing.JFrame {
             txtamount.setText("");
             autoID();
             //Load_room();
-            
+            Load_reservation();
             
             
             
@@ -557,6 +565,102 @@ public class reservation extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+         d=(DefaultTableModel)jTable1.getModel(); 
+        int selectIndex=jTable1.getSelectedRow();
+        
+        
+        jLabel12.setText(d.getValueAt(selectIndex, 0).toString());
+        txtname.setText(d.getValueAt(selectIndex, 1).toString());
+        txtmobile.setText(d.getValueAt(selectIndex, 2).toString());
+        txtrtype.setSelectedItem(d.getValueAt(selectIndex, 5).toString());
+        txtro.setSelectedItem(d.getValueAt(selectIndex, 6).toString());
+        txtbtype.setSelectedItem(d.getValueAt(selectIndex, 7).toString());
+        txtamount.setText(d.getValueAt(selectIndex, 8).toString());
+
+        
+        jButton1.setEnabled(false);
+        
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        txtname.setText("");
+            txtaddress.setText("");
+             txtmobile.setText("");
+             txtaddress.setText("");
+             txtmobile.setText("");
+             
+            
+            txtrtype.setSelectedIndex(-1);
+            txtro.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            
+            
+            
+            
+            
+            
+            txtamount.setText("");
+            autoID();
+            //Load_room();
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+         String reno=jLabel12.getText();
+      
+        
+        try {
+            pst=con.prepareStatement("delete from reservation where reid = ?");
+            pst.setString(1, reno);
+            
+            
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this,"Reservation Deleteddd");
+            
+            txtname.setText("");
+            txtaddress.setText("");
+             txtmobile.setText("");
+             txtaddress.setText("");
+             txtmobile.setText("");
+             
+            
+            txtrtype.setSelectedIndex(-1);
+            txtro.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            
+            
+            
+            
+            
+            
+            txtamount.setText("");
+            autoID();
+            //Load_room();
+            Load_reservation();
+            
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -595,7 +699,6 @@ public class reservation extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
